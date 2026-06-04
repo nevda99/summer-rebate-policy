@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>夏季盛典 · 流水返点政策</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #F5C842;
+      --gold-light: #FFE680;
+      --gold-dark: #C89A00;
+      --red: #E8341C;
+      --red-soft: #FF6B4A;
+      --ink: #1A1210;
+      --ink-mid: #3D2C26;
+      --paper: #FDF6E3;
+      --paper-warm: #FAF0D0;
+      --cream: #F7EDD0;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background-color: var(--ink);
+      font-family: 'Noto Sans SC', sans-serif;
+      color: var(--paper);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── 背景纹理 ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245,200,66,0.12) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5c842' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ─── 顶部大标题 ─── */
+    .hero {
+      text-align: center;
+      padding: 52px 0 32px;
+      position: relative;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--red);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      padding: 5px 16px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: clamp(32px, 8vw, 52px);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--gold);
+      letter-spacing: -1px;
+      text-shadow: 0 0 40px rgba(245,200,66,0.3);
+    }
+
+    .hero-sub {
+      margin-top: 12px;
+      font-size: 15px;
+      color: rgba(253,246,227,0.55);
+      letter-spacing: 1px;
+    }
+
+    .hero-date {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,200,66,0.1);
+      border: 1px solid rgba(245,200,66,0.25);
+      border-radius: 100px;
+      padding: 8px 20px;
+      font-size: 13px;
+      color: var(--gold-light);
+      font-weight: 500;
+    }
+
+    .hero-date::before {
+      content: '📅';
+      font-size: 14px;
+    }
+
+    /* ─── 核心说明卡 ─── */
+    .intro-card {
+      background: rgba(245,200,66,0.06);
+      border: 1px solid rgba(245,200,66,0.2);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin: 32px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intro-card::before {
+      content: '💡';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 48px;
+      opacity: 0.15;
+    }
+
+    .intro-card h3 {
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .intro-card p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(253,246,227,0.8);
+    }
+
+    .highlight {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    .highlight-red {
+      color: var(--red-soft);
+      font-weight: 700;
+    }
+
+    /* ─── 分层卡片区 ─── */
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: rgba(253,246,227,0.3);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin: 40px 0 16px;
+    }
+
+    .tier-card {
+      border-radius: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform 0.2s;
+    }
+
+    .tier-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .tier-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+    }
+
+    .tier-1 .tier-header { background: linear-gradient(135deg, #2A1F0E, #3D2C14); }
+    .tier-2 .tier-header { background: linear-gradient(135deg, #0E1A2A, #142A3D); }
+    .tier-3 .tier-header { background: linear-gradient(135deg, #1A0E2A, #2A143D); }
+
+    .tier-badge {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tier-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .tier-1 .tier-icon { background: rgba(245,200,66,0.15); }
+    .tier-2 .tier-icon { background: rgba(74,163,255,0.15); }
+    .tier-3 .tier-icon { background: rgba(163,74,255,0.15); }
+
+    .tier-name {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--paper);
+    }
+
+    .tier-range {
+      font-size: 12px;
+      color: rgba(253,246,227,0.45);
+      margin-top: 2px;
+    }
+
+    /* ─── 返点计算器 ─── */
+    .calc-section {
+      margin: 0 0 32px;
+      background: linear-gradient(145deg, #1E160A, #2A1E0C);
+      border: 1px solid rgba(245,200,66,0.25);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .calc-header {
+      background: linear-gradient(135deg, rgba(245,200,66,0.12), rgba(245,200,66,0.04));
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid rgba(245,200,66,0.1);
+    }
+
+    .calc-header-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .calc-icon {
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .calc-title {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .calc-subtitle {
+      font-size: 12px;
+      color: rgba(253,246,227,0.4);
+      margin-left: 32px;
+    }
+
+    .calc-body {
+      padding: 20px 24px 24px;
+    }
+
+    .calc-row {
+      margin-bottom: 16px;
+    }
+
+    .calc-label {
+      font-size: 12px;
+      color: rgba(253,246,227,0.5);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .calc-input-wrap {
+      display: flex;
+      align-items: center;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(245,200,66,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .calc-input-wrap:focus-within {
+      border-color: rgba(245,200,66,0.6);
+    }
+
+    .calc-input-wrap input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--paper);
+      font-size: 18px;
+      font-weight: 700;
+      font-family: 'Noto Sans SC', sans-serif;
+      padding: 12px 14px;
+    }
+
+    .calc-input-wrap input::placeholder {
+      color: rgba(253,246,227,0.2);
+      font-weight: 400;
+      font-size: 14px;
+    }
+
+    .calc-input-unit {
+      padding: 0 14px;
+      font-size: 13px;
+      color: rgba(245,200,66,0.6);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .calc-tip {
+      font-size: 11px;
+      color: rgba(253,246,227,0.3);
+      margin-top: 6px;
+    }
+
+    .calc-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #C89A00, #F5C842);
+      border: none;
+      border-radius: 12px;
+      color: var(--ink);
+      font-size: 16px;
+      font-weight: 900;
+      font-family: 'Noto Sans SC', sans-serif;
+      cursor: pointer;
+      letter-spacing: 2px;
+      margin-top: 4px;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .calc-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .calc-btn:active { opacity: 0.8; transform: translateY(0); }
+
+    .calc-result {
+      display: none;
+      margin-top: 20px;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .calc-result.visible { display: block; }
+
+    .result-top {
+      background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(245,200,66,0.05));
+      border: 1px solid rgba(245,200,66,0.3);
+      border-radius: 14px;
+      padding: 20px 22px;
+      margin-bottom: 12px;
+    }
+
+    .result-tier-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(245,200,66,0.12);
+      border: 1px solid rgba(245,200,66,0.3);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: var(--gold-light);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .result-main {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .result-label {
+      font-size: 13px;
+      color: rgba(253,246,227,0.5);
+      margin-bottom: 4px;
+    }
+
+    .result-amount {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      text-shadow: 0 0 24px rgba(245,200,66,0.4);
+    }
+
+    .result-amount span {
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(245,200,66,0.7);
+    }
+
+    .result-rate-badge {
+      background: rgba(245,200,66,0.12);
+      border: 1px solid rgba(245,200,66,0.25);
+      border-radius: 10px;
+      padding: 8px 14px;
+      text-align: center;
+    }
+
+    .result-rate-num {
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--gold);
+      font-family: 'Noto Serif SC', serif;
+    }
+
+    .result-rate-label {
+      font-size: 10px;
+      color: rgba(253,246,227,0.4);
+      margin-top: 2px;
+    }
+
+    .result-breakdown {
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+
+    .result-breakdown-title {
+      font-size: 11px;
+      color: rgba(253,246,227,0.35);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .breakdown-row:last-child { border-bottom: none; }
+
+    .breakdown-key { color: rgba(253,246,227,0.45); }
+    .breakdown-val { color: var(--paper); font-weight: 600; }
+    .breakdown-val.em { color: var(--gold); }
+
+    .result-no-rebate {
+      background: rgba(232,52,28,0.1);
+      border: 1px solid rgba(232,52,28,0.25);
+      border-radius: 14px;
+      padding: 20px 22px;
+      text-align: center;
+    }
+
+    .result-no-rebate .icon { font-size: 28px; margin-bottom: 10px; }
+    .result-no-rebate .title { font-size: 16px; font-weight: 700; color: var(--red-soft); margin-bottom: 6px; }
+    .result-no-rebate .desc { font-size: 13px; color: rgba(253,246,227,0.5); line-height: 1.7; }
+
+    .tier-body {
+      padding: 0 4px 4px;
+    }
+
+    .tier-1 .tier-body { background: linear-gradient(180deg, #3D2C14, #221508); }
+    .tier-2 .tier-body { background: linear-gradient(180deg, #142A3D, #081522); }
+    .tier-3 .tier-body { background: linear-gradient(180deg, #2A143D, #150822); }
+
+    /* ─── 档位列表 ─── */
+    .rebate-list {
+      list-style: none;
+      padding: 8px 20px 16px;
+    }
+
+    .rebate-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      gap: 12px;
+    }
+
+    .rebate-item:last-child { border-bottom: none; }
+
+    .rebate-flow {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .rebate-flow-label {
+      font-size: 12px;
+      color: rgba(253,246,227,0.4);
+      margin-bottom: 2px;
+    }
+
+    .rebate-flow-val {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--paper);
+    }
+
+    .rebate-arrow {
+      color: rgba(255,255,255,0.2);
+      font-size: 16px;
+    }
+
+    .rebate-money {
+      text-align: right;
+    }
+
+    .rebate-rate {
+      font-size: 11px;
+      color: rgba(253,246,227,0.4);
+      margin-bottom: 2px;
+    }
+
+    .rebate-val {
+      font-size: 20px;
+      font-weight: 900;
+      font-family: 'Noto Serif SC', serif;
+    }
+
+    .tier-1 .rebate-val { color: var(--gold); }
+    .tier-2 .rebate-val { color: #7ECBFF; }
+    .tier-3 .rebate-val { color: #C77CFF; }
+
+    /* cap 状态特殊标注 */
+    .rebate-item.is-cap .rebate-val {
+      color: var(--red-soft) !important;
+    }
+
+    .cap-tag {
+      font-size: 10px;
+      background: rgba(232,52,28,0.15);
+      color: var(--red-soft);
+      border-radius: 4px;
+      padding: 2px 6px;
+      margin-top: 2px;
+      display: inline-block;
+    }
+
+    /* ─── 进度条 ─── */
+    .bar-wrap {
+      padding: 0 20px 20px;
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .bar-label {
+      width: 60px;
+      font-size: 11px;
+      color: rgba(253,246,227,0.45);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      transition: width 1s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .tier-1 .bar-fill { background: linear-gradient(90deg, #C89A00, #F5C842); }
+    .tier-2 .bar-fill { background: linear-gradient(90deg, #1A6FCC, #7ECBFF); }
+    .tier-3 .bar-fill { background: linear-gradient(90deg, #7A1ACC, #C77CFF); }
+
+    .bar-pct {
+      width: 36px;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .tier-1 .bar-pct { color: var(--gold); }
+    .tier-2 .bar-pct { color: #7ECBFF; }
+    .tier-3 .bar-pct { color: #C77CFF; }
+
+    /* ─── 分隔线 ─── */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(245,200,66,0.2), transparent);
+      margin: 8px 0 16px;
+    }
+
+    /* ─── 计算公式区 ─── */
+    .formula-section {
+      margin: 40px 0;
+    }
+
+    .formula-card {
+      background: rgba(245,200,66,0.04);
+      border: 1px solid rgba(245,200,66,0.15);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    .formula-num {
+      display: inline-flex;
+      width: 24px;
+      height: 24px;
+      background: var(--gold);
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 900;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .formula-title {
+      display: flex;
+      align-items: center;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--paper);
+      margin-bottom: 16px;
+    }
+
+    .formula-box {
+      background: rgba(0,0,0,0.3);
+      border-radius: 10px;
+      padding: 16px 18px;
+      font-size: 14px;
+      color: rgba(253,246,227,0.7);
+      line-height: 1.9;
+    }
+
+    .formula-eq {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--paper);
+      flex-wrap: wrap;
+      margin: 10px 0 4px;
+    }
+
+    .formula-eq .op { color: rgba(253,246,227,0.35); font-size: 18px; }
+    .formula-eq .result {
+      color: var(--gold);
+      font-size: 20px;
+      font-weight: 900;
+      font-family: 'Noto Serif SC', serif;
+    }
+
+    /* ─── 注意事项 ─── */
+    .notice-section {
+      background: rgba(232,52,28,0.07);
+      border: 1px solid rgba(232,52,28,0.2);
+      border-radius: 16px;
+      padding: 24px;
+      margin: 32px 0;
+    }
+
+    .notice-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--red-soft);
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+
+    .notice-list {
+      list-style: none;
+    }
+
+    .notice-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      color: rgba(253,246,227,0.7);
+      line-height: 1.7;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(232,52,28,0.08);
+    }
+
+    .notice-list li:last-child { border-bottom: none; }
+
+    .notice-list li::before {
+      content: '▸';
+      color: var(--red-soft);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ─── 底部 ─── */
+    .footer {
+      text-align: center;
+      padding: 32px 0;
+      font-size: 12px;
+      color: rgba(253,246,227,0.2);
+      letter-spacing: 1px;
+    }
+
+    /* ─── 动画 ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero, .intro-card, .tier-card, .formula-card, .notice-section {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .tier-card:nth-child(1) { animation-delay: 0.1s; }
+    .tier-card:nth-child(2) { animation-delay: 0.2s; }
+    .tier-card:nth-child(3) { animation-delay: 0.3s; }
+
+    /* ─── 响应式 ─── */
+    @media (max-width: 400px) {
+      .rebate-flow-val { font-size: 15px; }
+      .rebate-val { font-size: 17px; }
+      .tier-header { padding: 16px 18px; }
+      .rebate-list { padding: 8px 14px 12px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 顶部标题 -->
+  <div class="hero">
+    <div class="hero-tag">2026 夏季盛典专属</div>
+    <div class="hero-title">流水增长<br>现金返点政策</div>
+    <div class="hero-sub">超过历史月均，多打多返</div>
+    <div class="hero-date">活动时间：6月5日 — 6月28日</div>
+  </div>
+
+  <!-- 核心说明 -->
+  <div class="intro-card">
+    <h3>✦ 什么是「增量返点」？</h3>
+    <p>
+      系统会取你今年 <span class="highlight">1-5月月均流水</span> 或 <span class="highlight">5月日均流水（不含520当日）</span>，两者取高值作为「基线」。<br>
+      6月超出基线的那部分叫 <span class="highlight">增量</span>，对增量进行返现金。<br>
+      <span class="highlight-red">增量不足1万元不返点</span>，增量越多，返点越高。
+    </p>
+  </div>
+
+  <!-- 返点计算器 -->
+  <div class="calc-section">
+    <div class="calc-header">
+      <div class="calc-header-top">
+        <div class="calc-icon">🧮</div>
+        <div class="calc-title">返点速算器</div>
+      </div>
+      <div class="calc-subtitle">输入你的数据，秒算能拿多少现金</div>
+    </div>
+    <div class="calc-body">
+      <div class="calc-row">
+        <div class="calc-label">① 你的 1-5月月均流水（咨询运营获取）</div>
+        <div class="calc-input-wrap">
+          <input type="number" id="baseInput" placeholder="如：20000" min="0" />
+          <div class="calc-input-unit">元</div>
+        </div>
+        <div class="calc-tip">不知道？联系你的运营同学查询</div>
+      </div>
+      <div class="calc-row">
+        <div class="calc-label">② 你计划6月打多少流水</div>
+        <div class="calc-input-wrap">
+          <input type="number" id="targetInput" placeholder="如：50000" min="0" />
+          <div class="calc-input-unit">元</div>
+        </div>
+        <div class="calc-tip">填入你的目标流水金额</div>
+      </div>
+      <button class="calc-btn" onclick="calcRebate()">立即计算我能拿多少 →</button>
+
+      <div class="calc-result" id="calcResult"></div>
+    </div>
+  </div>
+
+  <!-- 三档卡片 -->
+  <div class="section-label">按月均流水分三档</div>
+
+  <!-- 第一档 -->
+  <div class="tier-card tier-1">
+    <div class="tier-header">
+      <div class="tier-badge">
+        <div class="tier-icon">🥉</div>
+        <div>
+          <div class="tier-name">成长主播</div>
+          <div class="tier-range">月均流水 1万 ~ 5万</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tier-body">
+      <div class="divider"></div>
+      <ul class="rebate-list">
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">1 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 12%</div>
+            <div class="rebate-val">返 1,200元</div>
+          </div>
+        </li>
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">2 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 13%</div>
+            <div class="rebate-val">返 2,600元</div>
+          </div>
+        </li>
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">3 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量×14% vs 全量×10%，取少的</div>
+            <div class="rebate-val">约 4,000元+</div>
+          </div>
+        </li>
+        <li class="rebate-item is-cap">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">5 万元及以上</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">全量流水 × 10%</div>
+            <div class="rebate-val">按全量返</div>
+            <div class="cap-tag">⚡ 已到最高档</div>
+          </div>
+        </li>
+      </ul>
+      <div class="bar-wrap">
+        <div class="bar-row">
+          <div class="bar-label">1万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:12%"></div></div>
+          <div class="bar-pct">12%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">2万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:13%"></div></div>
+          <div class="bar-pct">13%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">3万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
+          <div class="bar-pct">14%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">5万+增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+          <div class="bar-pct">最高档</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第二档 -->
+  <div class="tier-card tier-2">
+    <div class="tier-header">
+      <div class="tier-badge">
+        <div class="tier-icon">🥈</div>
+        <div>
+          <div class="tier-name">进阶主播</div>
+          <div class="tier-range">月均流水 5万 ~ 10万</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tier-body">
+      <div class="divider"></div>
+      <ul class="rebate-list">
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">1 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 11%</div>
+            <div class="rebate-val">返 1,100元</div>
+          </div>
+        </li>
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">2 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 12%</div>
+            <div class="rebate-val">返 2,400元</div>
+          </div>
+        </li>
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">3 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 14%</div>
+            <div class="rebate-val">返 4,200元</div>
+          </div>
+        </li>
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">4 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 16%</div>
+            <div class="rebate-val">返 6,400元</div>
+          </div>
+        </li>
+        <li class="rebate-item is-cap">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">5 万元及以上</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">全量流水 × 10%</div>
+            <div class="rebate-val">按全量返</div>
+            <div class="cap-tag">⚡ 已到最高档</div>
+          </div>
+        </li>
+      </ul>
+      <div class="bar-wrap">
+        <div class="bar-row">
+          <div class="bar-label">1万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:11%"></div></div>
+          <div class="bar-pct">11%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">2万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:12%"></div></div>
+          <div class="bar-pct">12%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">3万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
+          <div class="bar-pct">14%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">4万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:16%"></div></div>
+          <div class="bar-pct">16%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">5万+增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+          <div class="bar-pct">最高档</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 第三档 -->
+  <div class="tier-card tier-3">
+    <div class="tier-header">
+      <div class="tier-badge">
+        <div class="tier-icon">🥇</div>
+        <div>
+          <div class="tier-name">头部主播</div>
+          <div class="tier-range">月均流水 10万以上</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="tier-body">
+      <div class="divider"></div>
+      <ul class="rebate-list">
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">1 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 10%</div>
+            <div class="rebate-val">返 1,000元</div>
+          </div>
+        </li>
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">3 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 14%</div>
+            <div class="rebate-val">返 4,200元</div>
+          </div>
+        </li>
+        <li class="rebate-item">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">5 万元</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">增量 × 17%</div>
+            <div class="rebate-val">返 8,500元</div>
+          </div>
+        </li>
+        <li class="rebate-item is-cap">
+          <div class="rebate-flow">
+            <div class="rebate-flow-label">当月增量流水达到</div>
+            <div class="rebate-flow-val">10 万元及以上</div>
+          </div>
+          <div class="rebate-arrow">→</div>
+          <div class="rebate-money">
+            <div class="rebate-rate">全量流水 × 10%</div>
+            <div class="rebate-val">按全量返</div>
+            <div class="cap-tag">⚡ 已到最高档</div>
+          </div>
+        </li>
+      </ul>
+      <div class="bar-wrap">
+        <div class="bar-row">
+          <div class="bar-label">1万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
+          <div class="bar-pct">10%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">3万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
+          <div class="bar-pct">14%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">5万增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:17%"></div></div>
+          <div class="bar-pct">17%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">10万+增量</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+          <div class="bar-pct">封顶</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 计算示例 -->
+  <div class="formula-section">
+    <div class="section-label">三种计算方式举例</div>
+
+    <div class="formula-card">
+      <div class="formula-title">
+        <span class="formula-num">1</span>
+        直接按增量比例返点（最常见）
+      </div>
+      <div class="formula-box">
+        <div style="color:rgba(253,246,227,0.5); margin-bottom:8px;">例：基线1万的主播，6月流水打了2万，增量1万</div>
+        <div class="formula-eq">
+          <span>增量1万</span>
+          <span class="op">×</span>
+          <span>12%</span>
+          <span class="op">=</span>
+          <span class="result">返 1,200 元</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula-title">
+        <span class="formula-num">2</span>
+        增量返点 vs 全量返点，取少的
+      </div>
+      <div class="formula-box">
+        <div style="color:rgba(253,246,227,0.5); margin-bottom:8px;">例：基线1万的主播，6月流水打了4万，增量3万</div>
+        <div class="formula-eq">
+          <span>方案A：增量3万 × 14%</span>
+          <span class="op">=</span>
+          <span>4,200元</span>
+        </div>
+        <div class="formula-eq">
+          <span>方案B：全量4万 × 10%</span>
+          <span class="op">=</span>
+          <span>4,000元</span>
+        </div>
+        <div class="formula-eq">
+          <span>取小值 →</span>
+          <span class="result">返 4,000 元</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="formula-card">
+      <div class="formula-title">
+        <span class="formula-num">3</span>
+        直接按全量×10%封顶返点
+      </div>
+      <div class="formula-box">
+        <div style="color:rgba(253,246,227,0.5); margin-bottom:8px;">例：基线1万的主播，6月流水打了6万，增量5万</div>
+        <div class="formula-eq">
+          <span>全量6万</span>
+          <span class="op">×</span>
+          <span>10%</span>
+          <span class="op">=</span>
+          <span class="result">返 6,000 元</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 注意事项 -->
+  <div class="notice-section">
+    <div class="notice-title">⚠ 注意事项</div>
+    <ul class="notice-list">
+      <li>增量不足 <strong>1万元</strong> 不参与返点，从第一个1万起算</li>
+      <li><strong>背包礼物、幸运值礼物</strong> 不计入本次活动流水</li>
+      <li>每个主播只按最高落入的那一个档位计算，不累加多档</li>
+      <li>增量上限为 <strong>20万元</strong>，超出部分需单独申请</li>
+      <li>全量返点上限为 <strong>全量 × 10%</strong>，不会超过这个数</li>
+    </ul>
+  </div>
+
+  <div class="footer">夏季盛典 · 素人流水增长活动 · 2026年6月</div>
+
+</div>
+
+<script>
+function calcRebate() {
+  const baseVal = parseFloat(document.getElementById('baseInput').value);
+  const targetVal = parseFloat(document.getElementById('targetInput').value);
+  const resultEl = document.getElementById('calcResult');
+
+  // 输入校验
+  if (isNaN(baseVal) || baseVal < 0 || isNaN(targetVal) || targetVal <= 0) {
+    resultEl.className = 'calc-result visible';
+    resultEl.innerHTML = `
+      <div class="result-no-rebate">
+        <div class="icon">⚠️</div>
+        <div class="title">请先填写两项数据</div>
+        <div class="desc">请输入你的月均流水基线和6月计划流水</div>
+      </div>`;
+    return;
+  }
+
+  const rawIncrement = targetVal - baseVal;
+
+  // 增量不足1万，不返
+  if (rawIncrement < 10000) {
+    resultEl.className = 'calc-result visible';
+    const shortfall = (10000 - rawIncrement).toLocaleString('zh-CN');
+    resultEl.innerHTML = `
+      <div class="result-no-rebate">
+        <div class="icon">😔</div>
+        <div class="title">暂未达到返点门槛</div>
+        <div class="desc">
+          当前增量 <strong style="color:var(--red-soft)">${rawIncrement <= 0 ? '0' : Math.round(rawIncrement).toLocaleString('zh-CN')} 元</strong>，还差 <strong style="color:var(--gold)">${shortfall} 元</strong> 增量才能开始返点。<br><br>
+          增量起点为 <strong>1万元</strong>，加油冲！
+        </div>
+      </div>`;
+    return;
+  }
+
+  // 增量超过20万：不走现有政策，直接提示找运营特殊沟通
+  if (rawIncrement > 200000) {
+    resultEl.className = 'calc-result visible';
+    resultEl.innerHTML = `
+      <div style="background:linear-gradient(135deg,rgba(245,160,30,0.15),rgba(245,120,0,0.08)); border:2px solid rgba(245,160,30,0.55); border-radius:14px; padding:28px 24px; text-align:center;">
+        <div style="font-size:36px; margin-bottom:12px;">🌟</div>
+        <div style="font-size:18px; font-weight:900; color:#F5A01E; letter-spacing:0.5px; margin-bottom:12px;">你是大额增长主播！</div>
+        <div style="font-size:14px; color:rgba(253,246,227,0.7); line-height:1.9;">
+          你的计划增量 <strong style="color:var(--gold)">${Math.round(rawIncrement).toLocaleString('zh-CN')} 元</strong> 超过了本政策的增量上限 <strong style="color:var(--gold)">20万元</strong>。<br>
+          超出上限的大额增长主播<strong style="color:#F5A01E;">不适用本政策</strong>，<br>
+          会有<strong style="color:#F5A01E;">更优的专属方案</strong>等你来谈，<br>
+          请直接联系你的<strong style="color:white;">运营同学单独协商</strong>返点政策。
+        </div>
+      </div>`;
+    setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    return;
+  }
+
+  // 正式计算（增量在1万~20万以内）
+  const isOverCap = false;
+  const increment = rawIncrement;
+  const effectiveTarget = targetVal;
+
+  // 确定分层及返点规则（按原始基线分层，不受增量影响）
+  let tierName, tierColor, rates;
+  if (baseVal < 50000) {
+    // 1w-5w
+    tierName = '成长主播'; tierColor = 'var(--gold)';
+    rates = [
+      { threshold: 10000,  rate: 0.12, type: 'fixed' },
+      { threshold: 20000,  rate: 0.13, type: 'fixed' },
+      { threshold: 30000,  rate: 0.14, type: 'min'   },
+      { threshold: 40000,  rate: 0.16, type: 'min'   },
+      { threshold: 50000,  rate: null, type: 'cap'   },
+    ];
+  } else if (baseVal < 100000) {
+    // 5w-10w
+    tierName = '进阶主播'; tierColor = '#7ECBFF';
+    rates = [
+      { threshold: 10000,  rate: 0.11, type: 'fixed' },
+      { threshold: 20000,  rate: 0.12, type: 'fixed' },
+      { threshold: 30000,  rate: 0.14, type: 'fixed' },
+      { threshold: 40000,  rate: 0.16, type: 'fixed' },
+      { threshold: 50000,  rate: 0.17, type: 'min'   },
+      { threshold: 100000, rate: null, type: 'cap'   },
+    ];
+  } else {
+    // 10w+
+    tierName = '头部主播'; tierColor = '#C77CFF';
+    rates = [
+      { threshold: 10000,  rate: 0.10, type: 'fixed' },
+      { threshold: 20000,  rate: 0.12, type: 'fixed' },
+      { threshold: 30000,  rate: 0.14, type: 'fixed' },
+      { threshold: 40000,  rate: 0.16, type: 'fixed' },
+      { threshold: 50000,  rate: 0.17, type: 'fixed' },
+      { threshold: 100000, rate: null, type: 'cap'   },
+    ];
+  }
+
+  // 找到当前增量对应的最高档位
+  let appliedRate = rates[0];
+  for (let i = rates.length - 1; i >= 0; i--) {
+    if (increment >= rates[i].threshold) {
+      appliedRate = rates[i];
+      break;
+    }
+  }
+
+  // 计算返点金额（综合返点上限 = 有效全量 × 10%）
+  let rebateAmount, rateDisplay, calcMethod, finalType;
+  const capAmount = effectiveTarget * 0.10;
+
+  if (appliedRate.type === 'cap') {
+    // 直接按全量×10%（即60%全量返点，但综合返点率封顶10%）
+    rebateAmount = capAmount;
+    rateDisplay = '全量 × 10%（综合封顶）';
+    calcMethod = `${fmt(effectiveTarget)} × 10% = ${fmt(rebateAmount)}`;
+    finalType = 'cap';
+  } else if (appliedRate.type === 'min') {
+    // min(增量×rate, 全量×10%)，取最小值
+    const incomeRebate = increment * appliedRate.rate;
+    if (incomeRebate <= capAmount) {
+      rebateAmount = incomeRebate;
+      rateDisplay = `min(增量×${pct(appliedRate.rate)}, 全量×10%) → 增量方案更小`;
+      calcMethod = `增量 ${fmt(increment)} × ${pct(appliedRate.rate)} = ${fmt(incomeRebate)} ≤ 全量方案 ${fmt(capAmount)}，取 ${fmt(rebateAmount)}`;
+      finalType = 'increment';
+    } else {
+      rebateAmount = capAmount;
+      rateDisplay = `min(增量×${pct(appliedRate.rate)}, 全量×10%) → 全量方案更小`;
+      calcMethod = `增量方案 ${fmt(incomeRebate)} > 全量方案 ${fmt(capAmount)}，取小值 ${fmt(rebateAmount)}`;
+      finalType = 'cap';
+    }
+  } else {
+    // 固定增量返点
+    rebateAmount = increment * appliedRate.rate;
+    rateDisplay = `增量 × ${pct(appliedRate.rate)}`;
+    calcMethod = `增量 ${fmt(increment)} × ${pct(appliedRate.rate)} = ${fmt(rebateAmount)}`;
+    finalType = 'increment';
+  }
+
+  const overCapBanner = ''; // 已在结果底部单独渲染，此处废弃
+
+  resultEl.className = 'calc-result visible';
+  resultEl.innerHTML = `
+    <div class="result-top">
+      <div class="result-tier-tag">📊 ${tierName} · 计算完成</div>
+      <div class="result-main">
+        <div>
+          <div class="result-label">预计可拿到的现金返点</div>
+          <div class="result-amount" style="color:${tierColor}">
+            ${Math.round(rebateAmount).toLocaleString('zh-CN')}<span> 元</span>
+          </div>
+        </div>
+        <div class="result-rate-badge">
+          <div class="result-rate-num" style="color:${tierColor}">${finalType === 'cap' ? (rebateAmount/effectiveTarget*100).toFixed(1)+'%' : pct(appliedRate.rate)}</div>
+          <div class="result-rate-label">${finalType === 'cap' ? '综合返点率' : '增量返点率'}</div>
+        </div>
+      </div>
+    </div>
+    <div class="result-breakdown">
+      <div class="result-breakdown-title">计算明细</div>
+      <div class="breakdown-row">
+        <div class="breakdown-key">你的月均基线</div>
+        <div class="breakdown-val">${fmt(baseVal)}</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-key">参与计算增量</div>
+        <div class="breakdown-val em">${fmt(increment)}</div>
+      </div>
+      <div class="breakdown-row">
+        <div class="breakdown-key">适用档位</div>
+        <div class="breakdown-val">${tierName}</div>
+      </div>
+    </div>
+  `;
+
+  // 滚动到结果
+  setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function fmt(n) {
+  return Math.round(n).toLocaleString('zh-CN') + ' 元';
+}
+function pct(r) {
+  return (r * 100).toFixed(0) + '%';
+}
+
+// 回车触发计算
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') calcRebate();
+});
+</script>
+</body>
+</html>
